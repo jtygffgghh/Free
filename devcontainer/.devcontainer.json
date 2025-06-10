@@ -1,5 +1,9 @@
 {
-  "name": "XMRig Runner",
-  "image": "ubuntu",
-  "postCreateCommand": "apt update && apt install -y git build-essential cmake libuv1-dev libssl-dev libhwloc-dev && git clone https://github.com/xmrig/xmrig.git && cd xmrig && mkdir build && cd build && cmake .. && make -j$(nproc)"
+  "name": "My Container",
+  "image": "mcr.microsoft.com/devcontainers/base:ubuntu", 
+  "hostRequirements": {
+    "cpus": 4,
+    "memory": "16gb",
+    "storage": "32gb"
+  }
 }
