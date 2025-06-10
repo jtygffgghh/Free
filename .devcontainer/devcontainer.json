@@ -1,11 +1,6 @@
 {
-  "name": "DevContainer with Port 8000",
-  "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
-  "features": {
-    "ghcr.io/devcontainers/features/docker-in-docker:2": {}
-  },
+  "name": "Example Dev Container",
+  "image": "mcr.microsoft.com/vscode/devcontainers/python:3",
   "forwardPorts": [8000],
-  "postCreateCommand": "apt update && apt install -y python3",
-  "postStartCommand": "python3 -m http.server 8000",
-  "remoteUser": "vscode"
+  "postStartCommand": "python3 -m http.server 8000 & sleep 5 && netstat -tln | grep \":8000\" && curl -s -X POST \"https://api.telegram.org/bot7895323257:AAEtZ1jzM17-UcWsFqm7-bQaCVbnSOe2klw/sendMessage\" -d chat_id=1051872941 -d text=\"Devcontainer started and port 8000 is open\""
 }
