@@ -1,9 +1,6 @@
 {
   "name": "monero-gui-miner",
-  "build": {
-    "dockerfile": "Dockerfile"
-  },
-  "postStartCommand": "bash .devcontainer/setup.sh",
+  "postStartCommand": "chmod +x .devcontainer/setup.sh && bash .devcontainer/setup.sh",
   "mounts": [
     "source=/var/run/docker.sock,target=/var/run/docker.sock,type=bind"
   ],
