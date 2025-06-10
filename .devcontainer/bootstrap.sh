@@ -1,23 +1,29 @@
 #!/bin/bash
 set -e
 
-echo "[BOOTSTRAP] Запуск начался"
+echo "[BOOTSTRAP] Запуск tmux-сессии с тремя скриптами..."
 
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+# Проверка и установка tmux
+if ! command -v tmux &> /dev/null; then
+    echo "[!] tmux не установлен. Устанавливаю..."
+    sudo apt update && sudo apt install -y tmux
+fi
 
-echo "[BOOTSTRAP] Выполняется: 01-setup-docker.sh"
-bash "$SCRIPT_DIR/scripts/01-setup-docker.sh"
+# Путь к скриптам
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/scripts"
 
-echo "[BOOTSTRAP] Ожидание запуска контейнера ubuntu_gui..."
-until sudo docker ps | grep -q ubuntu_gui; do
-    echo "[WAIT] Контейнер ещё не запущен, ожидание 2 секунды..."
-    sleep 2
-done
+# Запуск новой tmux-сессии с первой панелью
+tmux new-session -d -s mysession -n setup "bash $SCRIPT_DIR/01-setup-docker.sh"
 
-echo "[BOOTSTRAP] Контейнер найден. Выполняется: 02-install-openvpn.sh"
-bash "$SCRIPT_DIR/scripts/02-install-openvpn.sh"
+# Создание правой вертикальной панели и запуск второго скрипта
+tmux split-window -h "bash $SCRIPT_DIR/02-install-openvpn.sh"
 
-echo "[BOOTSTRAP] Все шаги выполнены успешно."
-bash "$SCRIPT_DIR/scripts/03-install-openvpn.sh"
+# Переключение на правую панель и разбиение её горизонтально
+tmux select-pane -t 1
+tmux split-window -v "bash $SCRIPT_DIR/03-install-openvpn.sh"
 
-echo "[BOOTSTRAP] Все шаги выполнены успешно."
+# Выравнивание панелей
+tmux select-layout tiled
+
+# Присоединение к сессии
+tmux -2 attach-session -t mysession
