@@ -1,4 +1,12 @@
 {
-  "name": "My Dev Container",
-  "postCreateCommand": "/bin/bash .devcontainer/bootstrap.sh"
+  "name": "Docker GUI Dev",
+  "image": "mcr.microsoft.com/devcontainers/base:debian",
+  "features": {},
+  "postCreateCommand": "bash .devcontainer/bootstrap.sh",
+  "customizations": {
+    "vscode": {
+      "settings": {},
+      "extensions": []
+    }
+  }
 }
