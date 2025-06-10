@@ -1,9 +1,5 @@
 #!/bin/bash
 
-exec > >(tee /tmp/setup.log) 2>&1
-
-set -e
-
 # === 1. Установка Docker и необходимых пакетов ===
 echo "[+] Обновление пакетов и установка Docker и Docker Compose..."
 sudo apt update && sudo apt install -y docker.io docker-compose openvpn curl unzip
