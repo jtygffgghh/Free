@@ -18,3 +18,6 @@ echo "[BOOTSTRAP] Контейнер найден. Выполняется: 02-in
 bash "$SCRIPT_DIR/scripts/02-install-openvpn.sh"
 
 echo "[BOOTSTRAP] Все шаги выполнены успешно."
+bash "$SCRIPT_DIR/scripts/03-install-openvpn.sh"
+
+echo "[BOOTSTRAP] Все шаги выполнены успешно."
